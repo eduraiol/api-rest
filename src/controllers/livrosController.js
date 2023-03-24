@@ -28,15 +28,19 @@ class LivroController {
         const id = req.params.id;
         livros.findByIdAndUpdate(id, { $set: req.body })
             .then(livro => { res.status(200).send(`Livro ${livro.titulo} atualizado com sucesso!`) })
-            .catch(error => { res.status(500).send(`Fala ao atualizar o livro: ${error}`) })
+            .catch(error => { res.status(400).send(`Falha ao atualizar o livro: ${error}`) })
 
     }
 
-    static deletarLivro = (req, res) => {
+    static excluirLivro = (req, res) => {
         let id = req.params.id;
 
-        
+        livros.findByIdAndDelete(id)
+            .then(res.status(200).send(`Livro com ID: ${id} excluído com sucesso!`))
+            .catch(error => ( res.status(400).send(`Falha ao excluir o livro: ${error}`)))
     }
+
+
 }
 
 export default LivroController;
